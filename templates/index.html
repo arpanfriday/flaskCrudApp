@@ -14,11 +14,11 @@
             <tbody>
                 {% for task in tasks %}
                 <tr>
-                    <td>{{ task.content }}</td>
-                    <td>{{ task.date_created.date() }}</td>
+                    <td>{{ task[1] }}</td>
+                    <td>{{ task[2] }}</td>
                     <td>
-                        <button class="btn btn-danger"><a href="/delete/{{ task.id }}" style="color: white">Delete</a></button>
-                        <button class="btn btn-warning"><a href="/update/{{ task.id }}" style="color: white">Update</a></button>
+                        <button class="btn btn-danger"><a href="/delete/{{ task[0] }}" style="color: white">Delete</a></button>
+                        <button class="btn btn-warning"><a href="/update/{{ task[0] }}" style="color: white">Update</a></button>
                     </td>
                 </tr>
                 {% endfor %}
