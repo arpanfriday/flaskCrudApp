@@ -42,32 +42,35 @@ def index():
         return render_template('index.html', tasks=tasks)
 
 
-#
-#
-# @app.route('/delete/<int:id>')
-# def delete(id):
-#     task_to_delete = Todo.query.get_or_404(id)
-#     try:
-#         db.session.delete(task_to_delete)
-#         db.session.commit()
-#         return redirect('/')
-#
-#     except:
-#         return 'There was a problem deleting the task'
-#
-#
-# @app.route('/update/<int:id>', methods=['GET', 'POST'])
-# def update(id):
-#     selected_task = Todo.query.get_or_404(id)
-#     if request.method == 'POST':
-#         selected_task.content = request.form['content']
-#         try:
-#             db.session.commit()
-#             return redirect('/')
-#         except:
-#             return 'There was an issue updating your task'
-#     else:
-#         return render_template('update.html', selected_task=selected_task)
+@app.route('/delete/<int:id>')
+def delete(id):
+    try:
+        sql = '''DELETE from todo WHERE id=('%i')''' % id
+        cur.execute(sql)
+        return redirect('/')
+    except:
+        return 'There was a problem deleting the task'
+
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    if request.method == 'POST':
+        new_content = request.form['content']
+        try:
+            sql = '''UPDATE todo SET content=('%s') WHERE id=('%i')''' % (new_content, id)
+            cur.execute(sql)
+            return redirect('/')
+        except:
+            return 'There was an issue updating your task'
+    else:
+        try:
+            sql = '''SELECT * from todo WHERE id=('%i')''' % id
+            cur.execute(sql)
+            selected_task = cur.fetchall()
+            print(selected_task)
+        except:
+            return 'There was an issue fetching the selected task'
+        return render_template('update.html', selected_task=selected_task[0])
 
 
 if __name__ == '__main__':

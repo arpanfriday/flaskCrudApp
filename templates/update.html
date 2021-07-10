@@ -3,9 +3,9 @@
 {% block body %}
     <div class="container text-center">
         <h1>Update Task</h1>
-        <form action="/update/{{ selected_task.id }}" method="post">
-            <input type="text" class="form-control" name="content" id="content" value="{{ selected_task.content }}" >
-            <button class="btn btn-primary" type="submit">Update Task</button>
+        <form action="/update/{{ selected_task[0] }}" method="post">
+            <input type="text" class="form-control" name="content" id="content" value="{{ selected_task[1] }}" >
+            <button class="btn btn-primary" type="submit" style="margin: 10px">Update Task</button>
         </form>
     </div>
 {% endblock %}
